@@ -5,7 +5,12 @@ import CodeCard     from '../components/CodeCard.jsx';
 import profile      from '../data/profile.js';
 import links        from '../data/links.js';
 
-const PHRASES = ['Software Developer', 'React Engineer', 'Java Backend Dev', 'UI Craftsman'];
+const PHRASES = [
+  'Backend Software Engineer',
+  'Fintech Systems Builder',
+  'Distributed Systems Dev',
+  'Java & Spring Boot Expert',
+];
 
 function Home() {
   return (

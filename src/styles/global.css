@@ -721,6 +721,40 @@ button {
   font-weight: 500;
 }
 
+/* Award callout */
+.about__award {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 28px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, var(--gold-dim), var(--purple-dim));
+  border: 1px solid rgba(200, 169, 110, 0.2);
+  border-radius: var(--radius);
+}
+
+.about__award-icon {
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.about__award-title {
+  display: block;
+  font-weight: 600;
+  color: var(--gold);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+
+.about__award-sub {
+  display: block;
+  font-size: 13px;
+  color: var(--text-2);
+  margin-top: 3px;
+}
+
 .about__skills-label {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -872,6 +906,104 @@ button {
   display: flex;
   gap: 8px;
   margin-top: 4px;
+  align-items: center;
+}
+
+/* Badge: "PayU Digital Labs" */
+.project-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid rgba(200, 169, 110, 0.2);
+  padding: 3px 10px;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+/* Subtitle under title */
+.project-card__subtitle {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 3px 0 0;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+/* Impact metric row */
+.project-card__impact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.06);
+  border: 1px solid rgba(74, 222, 128, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+}
+
+.project-card__impact-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 6px rgba(74, 222, 128, 0.5);
+  flex-shrink: 0;
+}
+
+/* Hover overlay impact */
+.project-card__impact-hover {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #4ade80;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+/* Type badge on image corner */
+.project-card__media-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+}
+
+.project-card__type-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(200, 169, 110, 0.3);
+  color: var(--gold);
+}
+
+.project-card__type-badge--personal {
+  border-color: rgba(139, 127, 255, 0.3);
+  color: var(--purple);
+}
+
+/* Private label */
+.project-card__private {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-3);
+  font-family: var(--font-mono);
 }
 
 /* ═══════════════════════════════════════════════════

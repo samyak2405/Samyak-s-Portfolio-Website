@@ -1,7 +1,3 @@
-/**
- * Decorative floating code snippet card — visible on wide screens only.
- * Positioned absolutely in the hero, gently bobs up/down via CSS animation.
- */
 function CodeCard() {
   return (
     <div className="code-card" aria-hidden="true">
@@ -13,7 +9,7 @@ function CodeCard() {
       </div>
       <pre className="code-card__body">
         <code>
-          <span className="cc-comment">{'// portfolio config'}</span>{'\n'}
+          <span className="cc-comment">{'// backend engineer config'}</span>{'\n'}
           <span className="cc-kw">export default</span>{' {\n'}
           {'  '}<span className="cc-key">name</span>
           <span className="cc-punc">: </span>
@@ -21,20 +17,24 @@ function CodeCard() {
           <span className="cc-punc">,</span>{'\n'}
           {'  '}<span className="cc-key">role</span>
           <span className="cc-punc">: </span>
-          <span className="cc-str">&quot;Software Engineer&quot;</span>
+          <span className="cc-str">&quot;Backend SWE&quot;</span>
           <span className="cc-punc">,</span>{'\n'}
           {'  '}<span className="cc-key">company</span>
           <span className="cc-punc">: </span>
-          <span className="cc-str">&quot;PayU&quot;</span>
+          <span className="cc-str">&quot;PayU Digital Labs&quot;</span>
           <span className="cc-punc">,</span>{'\n'}
           {'  '}<span className="cc-key">stack</span>
           <span className="cc-punc">: [</span>
           <span className="cc-str">&quot;Java&quot;</span>
           <span className="cc-punc">, </span>
-          <span className="cc-str">&quot;React&quot;</span>
+          <span className="cc-str">&quot;Kafka&quot;</span>
           <span className="cc-punc">, </span>
-          <span className="cc-str">&quot;AWS&quot;</span>
+          <span className="cc-str">&quot;Redis&quot;</span>
           <span className="cc-punc">],</span>{'\n'}
+          {'  '}<span className="cc-key">award</span>
+          <span className="cc-punc">: </span>
+          <span className="cc-str">&quot;🏆 Extra Mile&quot;</span>
+          <span className="cc-punc">,</span>{'\n'}
           {'  '}<span className="cc-key">status</span>
           <span className="cc-punc">: </span>
           <span className="cc-str">&quot;available ✓&quot;</span>

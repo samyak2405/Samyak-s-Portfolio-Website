@@ -1369,6 +1369,49 @@ button {
 }
 
 /* ═══════════════════════════════════════════════════
+   CONTACT BANNERS & STATES
+═══════════════════════════════════════════════════ */
+.contact__banner {
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.contact__banner--error {
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  color: #f87171;
+}
+
+.contact__banner--error a {
+  color: #fca5a5;
+  text-decoration: underline;
+}
+
+/* Loading spinner inside button */
+.btn-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-top-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ═══════════════════════════════════════════════════
    CONTACT SUCCESS STATE
 ═══════════════════════════════════════════════════ */
 .contact__sent {

@@ -1,19 +1,59 @@
 import { useState } from 'react';
 import SocialLinks from '../components/SocialLinks.jsx';
-import useReveal from '../hooks/useReveal.js';
+import useReveal   from '../hooks/useReveal.js';
+
+const FALLBACK_EMAIL = import.meta.env.VITE_CONTACT_EMAIL ?? 'moon24samyak@gmail.com';
+
+const INITIAL = { name: '', email: '', message: '' };
+
+// status: 'idle' | 'loading' | 'success' | 'error' | 'rate_limited'
 
 function Contact() {
   const headerRef = useReveal();
   const formRef   = useReveal();
   const asideRef  = useReveal();
 
-  const [status, setStatus] = useState('idle'); // idle | sent
+  const [fields,      setFields]      = useState(INITIAL);
+  const [status,      setStatus]      = useState('idle');
+  const [directEmail, setDirectEmail] = useState('');
 
-  const handleSubmit = (e) => {
-    // mailto: action handles delivery; show a brief confirmation
-    setStatus('sent');
-    setTimeout(() => setStatus('idle'), 5000);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFields((f) => ({ ...f, [name]: value }));
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // ← stop the browser; we handle submission ourselves
+    setStatus('loading');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(fields),
+      });
+
+      if (res.ok) {
+        setStatus('success');
+        setFields(INITIAL);
+        return;
+      }
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.status === 429) {
+        setDirectEmail(data.directEmail ?? FALLBACK_EMAIL);
+        setStatus('rate_limited');
+        return;
+      }
+
+      setStatus('error');
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  const isLoading = status === 'loading';
 
   return (
     <section className="section" id="contact" aria-label="Contact">
@@ -31,57 +71,105 @@ function Contact() {
 
         <div className="contact__layout">
           <div ref={formRef} className="contact__form-card reveal reveal-d1">
-            {status === 'sent' ? (
+
+            {/* ── Success ── */}
+            {status === 'success' && (
               <div className="contact__sent" role="status">
                 <span className="contact__sent-icon" aria-hidden="true">✓</span>
-                <p>Thanks! Your message is on its way.</p>
+                <p>Message sent! I&apos;ll get back to you soon.</p>
+                <button
+                  className="btn btn--ghost btn--sm"
+                  onClick={() => setStatus('idle')}
+                >
+                  Send another
+                </button>
               </div>
-            ) : (
-              <form
-                className="contact__form"
-                action="mailto:moon24samyak@gmail.com"
-                method="post"
-                encType="text/plain"
-                onSubmit={handleSubmit}
-              >
+            )}
+
+            {/* ── Status banners (error / rate_limited) ── */}
+            {(status === 'error' || status === 'rate_limited') && (
+              <div className="contact__banner contact__banner--error" role="alert">
+                {status === 'rate_limited' ? (
+                  <>
+                    The contact form is at capacity this month. Email me directly at{' '}
+                    <a href={`mailto:${directEmail}`}>{directEmail}</a>.
+                  </>
+                ) : (
+                  <>
+                    Something went wrong. Email me directly at{' '}
+                    <a href={`mailto:${FALLBACK_EMAIL}`}>{FALLBACK_EMAIL}</a>.
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* ── Form (always rendered unless success, so banners show above it) ── */}
+            {status !== 'success' && (
+              <form className="contact__form" onSubmit={handleSubmit} noValidate>
                 <label className="field">
                   <span className="field__label">Name</span>
                   <input
                     className="field__input"
                     type="text"
                     name="name"
+                    value={fields.name}
+                    onChange={handleChange}
                     placeholder="Jane Doe"
                     autoComplete="name"
                     required
+                    disabled={isLoading}
                   />
                 </label>
+
                 <label className="field">
                   <span className="field__label">Email</span>
                   <input
                     className="field__input"
                     type="email"
                     name="email"
+                    value={fields.email}
+                    onChange={handleChange}
                     placeholder="jane@example.com"
                     autoComplete="email"
                     required
+                    disabled={isLoading}
                   />
                 </label>
+
                 <label className="field">
                   <span className="field__label">Message</span>
                   <textarea
                     className="field__textarea"
                     name="message"
+                    value={fields.message}
+                    onChange={handleChange}
                     placeholder="Tell me about your project…"
                     rows={5}
                     required
+                    disabled={isLoading}
                   />
                 </label>
-                <button className="btn btn--primary" type="submit">
-                  Send Message
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <line x1="22" y1="2" x2="11" y2="13" />
-                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                  </svg>
+
+                <button
+                  className="btn btn--primary"
+                  type="submit"
+                  disabled={isLoading}
+                  aria-busy={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <span className="btn-spinner" aria-hidden="true" />
+                      Sending…
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <line x1="22" y1="2" x2="11" y2="13" />
+                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                      </svg>
+                    </>
+                  )}
                 </button>
               </form>
             )}
